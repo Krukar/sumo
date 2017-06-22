@@ -7,6 +7,9 @@ When you're finished, you should have a real-time TODO app that two or more peop
 
 ## Release History
 
+### v1.0.2
+- Added Webpack for Sass compiling
+
 ### v1.0.1
 - Implemented LevelDB to act as my database
 

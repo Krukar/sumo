@@ -1,0 +1,17 @@
+/* ============
+index.scss
+Import all modules here
+============ */
+/* ============
+Third Party Libs
+============ */
+// @import "~normalize.css/normalize.css"; // Normalize CSS across browsers
+
+/* ============
+Core Modules
+============ */
+// @import "core/variables.scss"; // Site variables
+
+body{
+  background: red;
+}

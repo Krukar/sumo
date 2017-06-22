@@ -1,6 +1,13 @@
-const server = require('socket.io')();
-const database = require('./database');
-const Q = require('q')
+/* ============
+client.js
+Back end code
+============ */
+// Third party libraries
+const Q = require('q'); // Promises
+const server = require('socket.io')(); // Real time communication
+
+// Modules
+const database = require('./database'); // Database configuration
 
 server.on('connection', (client) => {
   // Sends a message to the client to reload all todos
@@ -33,6 +40,11 @@ server.on('connection', (client) => {
         reloadTodos(todos);
       });
     });
+  });
+
+  // On server connect load the list
+  getTodos().then(todos => {
+    reloadTodos(todos);
   });
 });
 
