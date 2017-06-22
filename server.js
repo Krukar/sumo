@@ -1,38 +1,39 @@
 const server = require('socket.io')();
-const firstTodos = require('./data');
-const Todo = require('./todo');
+const database = require('./database');
+const Q = require('q')
 
 server.on('connection', (client) => {
-    // This is going to be our fake 'database' for this application
-    // Parse all default Todo's from db
+  // Sends a message to the client to reload all todos
+  const reloadTodos = todos => {
+    server.emit('load', todos);
+  }
 
-    // FIXME: DB is reloading on client refresh. It should be persistent on new client
-    // connections from the last time the server was run...
-    const DB = firstTodos.map((t) => {
-        // Form new Todo objects
-        return new Todo(title=t.title);
+  // Returns the list from the database
+  const getTodos = () => {
+    let deferred = Q.defer();
+
+    database.get('todo', (err, todos) => {
+      if(err){
+        deferred.reject(new Error(err));
+      }
+
+      deferred.resolve(todos);
     });
 
-    // Sends a message to the client to reload all todos
-    const reloadTodos = () => {
-        server.emit('load', DB);
-    }
+    return deferred.promise;
+  }
 
-    // Accepts when a client makes a new todo
-    client.on('make', (t) => {
-        // Make a new todo
-        const newTodo = new Todo(title=t.title);
+  // Accepts when a client makes a new todo
+  client.on('make', value => {
+    // Get the current list
+    getTodos().then(todos => {
+      todos.push({title: value})
 
-        // Push this newly created todo to our database
-        DB.push(newTodo);
-
-        // Send the latest todos to the client
-        // FIXME: This sends all todos every time, could this be more efficient?
-        reloadTodos();
+      database.put('todo', todos, err => {
+        reloadTodos(todos);
+      });
     });
-
-    // Send the DB downstream on connect
-    reloadTodos();
+  });
 });
 
 console.log('Waiting for clients to connect');

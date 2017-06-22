@@ -5,6 +5,11 @@ This is our challenge for potential new team members. The code is for a simple r
 
 When you're finished, you should have a real-time TODO app that two or more people could use to share TODO's with one another. Imagine a TODO list our team could use for office chores, for example.
 
+## Release History
+
+### v1.0.1
+- Implemented LevelDB to act as my database
+
 ## Notes
 - When a TODO is made, completed or deleted, it should show up the same way on all clients. To test this, we recommend having two browser windows open (one incognito and one not)
 - We're evaluating you on the quality and completion of the quest list below. Do you commit often? ? Did you write team friendly code? Is the UI that
