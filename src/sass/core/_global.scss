@@ -1,0 +1,24 @@
+/* ============
+_global.scss
+Global styles
+============ */
+/* apply a natural box layout model to all elements, but allowing components to change */
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.main{
+  min-width: $small;
+  max-width: $maxWidth;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+}
+
+.btn{
+  cursor: pointer;
+
+  @include transitions;
+}

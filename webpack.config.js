@@ -1,7 +1,7 @@
 module.exports = {
   entry: './src/index.js',
   output: {
-    path: __dirname + '/public',
+    path: __dirname,
     filename: 'app.js'
   },
   resolve:{

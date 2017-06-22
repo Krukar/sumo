@@ -6,9 +6,34 @@
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 </head>
 <body>
-  <input id="todo-input" type="text" placeholder="Feed the cat" autofocus>
-  <button type="button" onclick="add()">Make</button>
-  <ul id="todo-list"></ul>
+
+  <main class="main">
+    <h1>ToDo List</h1>
+
+    <div class="inputContainer">
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">New Item</span>
+        <input id="todo-input" type="text" class="form-control" placeholder="Feed the cat" aria-describedby="basic-addon1" autofocus/>
+      </div>
+      <button class="btn btn-primary btn-block" type="button" onclick="add()">Add To List</button>
+    </div>
+
+    <div class="tableContainer">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Complete</th>
+            <th>To Do</th>
+            <th>User</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody id="todo-table">
+        </tbody>
+      </table>
+    </div>
+
+  </main>
 </body>
 <script src="app.js" async></script>
 <script src="client.js" async></script>

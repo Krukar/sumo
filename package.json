@@ -1,6 +1,6 @@
 {
   "name": "challenge",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Coding challenge by Michael Krukar",
   "main": "index.js",
   "scripts": {
@@ -27,9 +27,12 @@
     "socket.io": "^1.5.0"
   },
   "devDependencies": {
+    "bootstrap": "^4.0.0-alpha.6",
     "css-loader": "^0.28.4",
     "file-loader": "^0.11.2",
+    "font-awesome": "^4.7.0",
     "node-sass": "^4.5.3",
+    "normalize.css": "^7.0.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
     "webpack": "^3.0.0"

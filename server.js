@@ -9,7 +9,7 @@ const server = require('socket.io')(); // Real time communication
 // Modules
 const database = require('./database'); // Database configuration
 
-server.on('connection', (client) => {
+server.on('connection', client => {
   // Sends a message to the client to reload all todos
   const reloadTodos = todos => {
     server.emit('load', todos);
@@ -30,13 +30,55 @@ server.on('connection', (client) => {
     return deferred.promise;
   }
 
+  // Updates the DB
+  const updateTodos = todos => {
+    let deferred = Q.defer();
+
+    database.put('todo', todos, err => {
+      if(err){
+        deferred.reject(new Error(err));
+      }
+
+      deferred.resolve(true);
+    });
+
+    return deferred.promise;
+  }
+
   // Accepts when a client makes a new todo
   client.on('make', value => {
-    // Get the current list
     getTodos().then(todos => {
-      todos.push({title: value})
+      todos.push({
+        title: value,
+        user: client.request.connection.remoteAddress,
+        status: 'active'
+      });
 
-      database.put('todo', todos, err => {
+      updateTodos(todos).then(response => {
+        reloadTodos(todos);
+      });
+    });
+  });
+
+  // Deletes entry
+  client.on('del', i => {
+    getTodos().then(todos => {
+      todos.splice(i, 1);
+
+      updateTodos(todos).then(response => {
+        reloadTodos(todos);
+      });
+    });
+  });
+
+  // Complete entry
+  // Deletes entry
+  client.on('complete', i => {
+    getTodos().then(todos => {
+      // KRUKAR: I considered using a true false for completed BUT this can scale to different states (ie: Pending, In Progress, deleted, etc)
+      todos[i].status = todos[i].status === 'active' ? 'complete' : 'active';
+
+      updateTodos(todos).then(response => {
         reloadTodos(todos);
       });
     });

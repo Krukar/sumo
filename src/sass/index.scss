@@ -5,13 +5,20 @@ Import all modules here
 /* ============
 Third Party Libs
 ============ */
-// @import "~normalize.css/normalize.css"; // Normalize CSS across browsers
+@import "~normalize.css/normalize.css"; // Normalize CSS across browsers
+@import '~bootstrap/scss/bootstrap.scss'; // Import entire Bootstrap sass library
+@import "~font-awesome/css/font-awesome.css"; // Load font awesome icons
 
 /* ============
 Core Modules
 ============ */
-// @import "core/variables.scss"; // Site variables
+@import "core/variables.scss"; // Site wide sass variables
+@import "core/mixins.scss"; // Global mixins
+@import "core/global.scss"; // Global styles
+@import "core/typography.scss"; // Type settings
 
-body{
-  background: red;
-}
+/* ============
+Components
+============ */
+@import "components/inputContainer.scss"; // Input and submit
+@import "components/tableContainer.scss"; // Todo table

@@ -1,0 +1,8 @@
+/* ============
+_mixins.scss
+Global mixins
+============ */
+// Default transition for CSS
+@mixin transitions($prop: all, $speed: 0.25s){
+  transition: $prop $speed cubic-bezier(0, 0, 0.5, 1);
+}

@@ -1,0 +1,21 @@
+/* ============
+_variables.scss
+Site wide sass variables
+============ */
+// Breakpoints
+$small: 20rem; // 320px
+$medium: 40rem; // 640px
+$large: 75rem; // 1200px
+
+// Grid
+$maxWidth: $large; // 1200px
+
+// Standard colours
+$white: #ecf0f1;
+$silver: #bdc3c7;
+$black: #2c3e50;
+$success: #3498db;
+$error: #e74c3c;
+
+// Type Variables
+$normal: 400;

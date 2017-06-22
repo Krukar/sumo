@@ -1,0 +1,16 @@
+/* ============
+_typography.scss
+Type settings
+============ */
+body{
+  background: $white;
+  color: $black;
+
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 16px;
+  font-weight: $normal;
+}
+
+h1{
+  margin-bottom: 4rem;
+}

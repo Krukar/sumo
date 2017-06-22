@@ -1,0 +1,29 @@
+/* ============
+_tableContainer.scss
+Todo table
+============ */
+.tableContainer{
+  th:first-child, th:last-child,
+  td:first-child, td:last-child{
+    width: 10%;
+
+    text-align: center;
+  }
+  th:nth-child(2),
+  td:nth-child(2){
+    width: 60%;
+  }
+  .complete{
+      color: $silver;
+  }
+  .fa{
+    font-size: 1.25rem;
+
+    cursor: pointer;
+
+    @include transitions;
+    &:hover{
+      color: $success;
+    }
+  }
+}

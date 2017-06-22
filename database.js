@@ -12,7 +12,9 @@ database.get('todo', function(err, value){
   if(err){
     let todo = [
         {
-            "title" : "My First Todo Item"
+            "title" : "My First Todo Item",
+            "user"  : "Example",
+            "status": "active"
         },
     ]
 
