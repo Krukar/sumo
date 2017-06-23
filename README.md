@@ -7,6 +7,9 @@ When you're finished, you should have a real-time TODO app that two or more peop
 
 ## Release History
 
+### v1.0.4
+- Added complete all and delete all buttons, along with a form to submit via enter
+
 ### v1.0.3
 - Added Bootstrap and Complete/Delete functionality
 

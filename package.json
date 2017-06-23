@@ -1,6 +1,6 @@
 {
   "name": "challenge",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Coding challenge by Michael Krukar",
   "main": "index.js",
   "scripts": {

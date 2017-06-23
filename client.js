@@ -7,22 +7,37 @@ const server = io('http://localhost:3003/');
 
 // Vars
 const table = document.getElementById('todo-table'); // The List
+const form = document.getElementById('todo-form'); // The Form
 
-// NOTE: These are all our globally scoped functions for interacting with the server
+// I wanted to add submitting via Enter, which triggers a page refresh. So I added this event handler to prevent that from happening
+form.addEventListener('submit', e => {
+  e.preventDefault();
+});
+
 // This function adds a new todo from the input
 function add() {
   const input = document.getElementById('todo-input'); // Our input
 
-  // KRUKAR: Prevent empty submissions
-  // TODO KRUKAR: Some kind of notificaiton that it is required
+  // Prevent empty submissions
+  // TODO: Some kind of notificaiton that it is required
   if(input.value){
     // Emit the new todo as some data to the server
-    // KRUKAR: the é was super sneaky
+    // NOTE: the é was super sneaky
     server.emit('make', input.value);
 
     input.value = ''; // Clear the input
-    input.focus(); // KRUKAR: Refocuses
+    input.focus(); // Refocus
   }
+}
+
+// Completes an item
+function complete(i){
+  server.emit('complete', i);
+}
+
+// Deletes all items
+function completeAll(){
+  server.emit('complete', 'all');
 }
 
 // Deletes selected item
@@ -30,9 +45,9 @@ function del(i){
   server.emit('del', i);
 }
 
-// Completes an item
-function complete(i){
-  server.emit('complete', i);
+// Deletes all items
+function delAll(){
+    server.emit('del', 'all');
 }
 
 // Renders a new list
@@ -41,7 +56,7 @@ function render(i, todo) {
   if(todo.status === 'complete'){
     row.className = 'complete';
   }
-  
+
   row.insertCell(0).innerHTML = '<i class="fa fa-check-circle" aria-hidden="true" onclick="complete(' + i + ')"></i>';
   row.insertCell(1).innerHTML = todo.title;
   row.insertCell(2).innerHTML = todo.user;
@@ -52,7 +67,7 @@ function render(i, todo) {
 // NOTE: These are listeners for events from the server
 // This event is for (re)loading the entire list of todos from the server
 server.on('load', todos => {
-  // KRUKAR: I realize that destroying and updating the entire list is not as efficient as just updating each individual item
+  // NOTE: I realize that destroying and updating the entire list is not as efficient as just updating each individual item
   // The performance impact is extremely small when the lists are this tiny so for a first pass this is acceptable
   // If I was developing this further I would use React, since the virtual dom and how they handle updates solves this exact problem
   table.innerHTML = ''; // Clear the old list
@@ -60,4 +75,7 @@ server.on('load', todos => {
   for(let [i, todo] of todos.entries()){
     render(i, todo)
   }
+
+  // After rendering, store it in local storage so that it works offline
+  localStorage.setItem('todos', todos);
 });

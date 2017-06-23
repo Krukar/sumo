@@ -60,10 +60,20 @@ server.on('connection', client => {
     });
   });
 
-  // Deletes entry
-  client.on('del', i => {
+  // Complete entry
+  client.on('complete', i => {
     getTodos().then(todos => {
-      todos.splice(i, 1);
+      // If all was selected then
+      if(i === 'all'){
+        for(let todo of todos){
+          todo.status = 'complete'
+        }
+      }
+      else{
+        // NOTE: I considered using a true false for completed BUT this can scale to different states (ie: Pending, In Progress, deleted, etc)
+        todos[i].status = todos[i].status === 'active' ? 'complete' : 'active';
+      }
+
 
       updateTodos(todos).then(response => {
         reloadTodos(todos);
@@ -71,12 +81,16 @@ server.on('connection', client => {
     });
   });
 
-  // Complete entry
   // Deletes entry
-  client.on('complete', i => {
+  client.on('del', i => {
     getTodos().then(todos => {
-      // KRUKAR: I considered using a true false for completed BUT this can scale to different states (ie: Pending, In Progress, deleted, etc)
-      todos[i].status = todos[i].status === 'active' ? 'complete' : 'active';
+      // If all was selected then clear the array
+      if(i === 'all'){
+        todos = [];
+      }
+      else{
+        todos.splice(i, 1);
+      }
 
       updateTodos(todos).then(response => {
         reloadTodos(todos);

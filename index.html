@@ -11,11 +11,13 @@
     <h1>ToDo List</h1>
 
     <div class="inputContainer">
+      <form id="todo-form" onsubmit="add()">
       <div class="input-group">
         <span class="input-group-addon" id="basic-addon1">New Item</span>
         <input id="todo-input" type="text" class="form-control" placeholder="Feed the cat" aria-describedby="basic-addon1" autofocus/>
       </div>
-      <button class="btn btn-primary btn-block" type="button" onclick="add()">Add To List</button>
+      <button class="btn btn-primary btn-block" type="submit" onclick="add()">Add To List</button>
+    </form>
     </div>
 
     <div class="tableContainer">
@@ -31,6 +33,10 @@
         <tbody id="todo-table">
         </tbody>
       </table>
+      <div class="buttonsContainer">
+      <button type="button" class="btn btn-primary" onclick="completeAll()">Complete All</button>
+      <button type="button" class="btn btn-danger" onclick="delAll()">Delete All</button>
+    </div>
     </div>
 
   </main>
