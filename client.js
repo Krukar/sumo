@@ -5,20 +5,30 @@ Front End code
 // Modules
 const server = io('http://localhost:3003/');
 
+let temporary = false; // I'm using this to determine if I injected a temp todo list during a connection error
+
+// If you could not connect then
+server.on('connect_error', error =>{
+  if(!temporary){
+    // On load if the person has a ToDo list in local storage immediately make it available to them
+    // NOTE: Yes this is kind of a ghetto solution but within the 6 hour time limit this is a viable solution for a demo
+    let localTodos = JSON.parse(localStorage.getItem('todos'))
+    if(localTodos.length){
+      table.innerHTML = ''; // Clear the old list
+
+      for(let [i, todo] of localTodos.entries()){
+        render(i, todo)
+      }
+    }
+    temporary = true;
+  };
+});
+
 // Vars
 const table = document.getElementById('todo-table'); // The List
 const form = document.getElementById('todo-form'); // The Form
 
-// On load if the person has a ToDo list in local storage immediately make it available to them
-// NOTE: Yes this is kind of a ghetto solution but within the 6 hour time limit this is a viable solution for a demo
-let localTodos = JSON.parse(localStorage.getItem('todos'))
-if(localTodos.length){
-  table.innerHTML = ''; // Clear the old list
 
-  for(let [i, todo] of localTodos.entries()){
-    render(i, todo)
-  }
-}
 
 // This function adds a new todo from the input
 form.addEventListener('submit', e => {

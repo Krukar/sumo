@@ -7,6 +7,9 @@ When you're finished, you should have a real-time TODO app that two or more peop
 
 ## Release History
 
+### v1.0.6
+- Cleaned up how and when localstorage todo is injected
+
 ### v1.0.5
 - Injects a todo from localstorage on load
 
