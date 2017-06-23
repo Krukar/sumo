@@ -9,13 +9,20 @@ const server = io('http://localhost:3003/');
 const table = document.getElementById('todo-table'); // The List
 const form = document.getElementById('todo-form'); // The Form
 
-// I wanted to add submitting via Enter, which triggers a page refresh. So I added this event handler to prevent that from happening
-form.addEventListener('submit', e => {
-  e.preventDefault();
-});
+// On load if the person has a ToDo list in local storage immediately make it available to them
+// NOTE: Yes this is kind of a ghetto solution but within the 6 hour time limit this is a viable solution for a demo
+let localTodos = JSON.parse(localStorage.getItem('todos'))
+if(localTodos.length){
+  table.innerHTML = ''; // Clear the old list
+
+  for(let [i, todo] of localTodos.entries()){
+    render(i, todo)
+  }
+}
 
 // This function adds a new todo from the input
-function add() {
+form.addEventListener('submit', e => {
+  e.preventDefault(); // I wanted to add submitting via Enter, which triggers a page refresh. So I added this event handler to prevent that from happening
   const input = document.getElementById('todo-input'); // Our input
 
   // Prevent empty submissions
@@ -28,7 +35,7 @@ function add() {
     input.value = ''; // Clear the input
     input.focus(); // Refocus
   }
-}
+});
 
 // Completes an item
 function complete(i){
@@ -47,7 +54,7 @@ function del(i){
 
 // Deletes all items
 function delAll(){
-    server.emit('del', 'all');
+  server.emit('del', 'all');
 }
 
 // Renders a new list
@@ -77,5 +84,5 @@ server.on('load', todos => {
   }
 
   // After rendering, store it in local storage so that it works offline
-  localStorage.setItem('todos', todos);
+  localStorage.setItem('todos', JSON.stringify(todos));
 });

@@ -74,7 +74,6 @@ server.on('connection', client => {
         todos[i].status = todos[i].status === 'active' ? 'complete' : 'active';
       }
 
-
       updateTodos(todos).then(response => {
         reloadTodos(todos);
       });
